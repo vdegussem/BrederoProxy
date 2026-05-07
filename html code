@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: sans-serif; }
+        
+        /* This is your "Topping" Bar */
+        .topping-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 50px;
+            background: #333;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .topping-bar a { color: cyan; margin-left: 15px; text-decoration: none; }
+
+        /* This is where the external site loads */
+        .content-frame {
+            border: none;
+            width: 100%;
+            height: calc(100% - 50px);
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topping-bar">
+        <strong>My Custom Topping:</strong>
+        <a href="#">Home</a>
+        <a href="#">Settings</a>
+        <span style="margin-left:auto;">Viewing: google.com</span>
+    </div>
+
+    <!-- Note: Many big sites (like Google) block iframes for security. 
+         Try a smaller or your own site here. -->
+    <iframe src="https://wikipedia.org" class="content-frame"></iframe>
+
+</body>
+</html>
