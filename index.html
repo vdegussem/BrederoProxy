@@ -5,17 +5,21 @@
     <title>BrederoUnblocked</title>
     <link id="favicon" rel="icon" type="image/x-icon" href="https://google.com">
     <style>
-        body { 
-            margin: 0; padding: 0; 
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: sans-serif; background: #1a1a1a; }
+        
+        #home {
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            height: 100vh; background: #1a1a1a; color: white; font-family: sans-serif; 
+            height: 100vh; color: white; text-align: center;
         }
-        .container { text-align: center; background: #333; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
+        .container { background: #333; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         h1 { color: #00d1ff; margin-bottom: 10px; }
+        
         .url-input {
             width: 350px; padding: 15px; border-radius: 25px; border: 2px solid #444; 
             background: #222; color: white; font-size: 16px; outline: none;
         }
+
         .go-btn {
             margin-top: 25px; padding: 15px 40px; background: #00d1ff; color: black; 
             border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 16px;
@@ -24,32 +28,33 @@
 </head>
 <body>
 
-    <div class="container">
-        <h1>BrederoUnblocked</h1>
-        <p>Voer een URL in:</p>
-        <input type="text" id="siteUrl" class="url-input" placeholder="bijv. youtube.com" autofocus>
-        <br>
-        <button class="go-btn" onclick="loadSite()">Launch Invisible</button>
+    <div id="home">
+        <div class="container">
+            <h1>BrederoUnblocked</h1>
+            <p>Voer een URL in:</p>
+            <input type="text" id="siteUrl" class="url-input" placeholder="bijv. wikipedia.org" autofocus>
+            <br>
+            <button class="go-btn" onclick="loadSite()">Open via Proxy (Cloaked)</button>
+        </div>
     </div>
 
     <script>
         function loadSite() {
             let input = document.getElementById('siteUrl').value.trim();
-            
-            // We halen de / hier juist weg om hem later hard erin te zetten
-            let proxyBase = "https://onrender.com"; 
+            // JOUW CORRECTE PROXY URL MET SLASH
+            let proxyUrl = "https://onrender.com"; 
 
             if (input) {
                 let targetUrl = input;
                 if (!targetUrl.startsWith('http')) targetUrl = 'https://' + targetUrl;
                 
-                // We dwingen de slash hier tussen de twee variabelen
-                let finalUrl = proxyBase + "/" + targetUrl;
+                let finalUrl = proxyUrl + targetUrl;
 
+                // --- ABOUT:BLANK CLOAKING LOGIC ---
                 let newWin = window.open('about:blank', '_blank');
 
-                if (!newWin) { 
-                    alert("Pop-up geblokkeerd! Klik rechtsboven in de balk op 'Toestaan'.");
+                if (!newWin) {
+                    alert("Pop-up geblokkeerd! Klik rechtsboven op 'Toestaan'.");
                     return;
                 }
 
@@ -72,7 +77,14 @@
             }
         }
 
+        // TAB LOCKER voor de huidige pagina
+        const lockedTitle = "BrederoUnblocked";
+        setInterval(() => {
+            if (document.title !== lockedTitle) document.title = lockedTitle;
+        }, 100);
+
         document.getElementById('siteUrl').addEventListener("keypress", (e) => { if (e.key === "Enter") loadSite(); });
     </script>
+
 </body>
 </html>
