@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BrederoUnblocked - No Frame</title>
+    <title>BrederoUnblocked</title>
+    <!-- Dit is het icoontje dat in je tabblad blijft staan -->
+    <link id="favicon" rel="icon" type="image/x-icon" href="https://google.com">
     <style>
         body { 
             margin: 0; padding: 0; 
@@ -48,33 +50,43 @@
     </div>
 
     <script>
+        // --- TAB LOCKER LOGIC ---
+        const lockedTitle = "BrederoUnblocked";
+        const lockedFavicon = "https://google.com";
+
+        function lockTab() {
+            // Forceer titel
+            if (document.title !== lockedTitle) {
+                document.title = lockedTitle;
+            }
+            // Forceer favicon
+            let favicon = document.getElementById('favicon');
+            if (favicon && favicon.href !== lockedFavicon) {
+                favicon.href = lockedFavicon;
+            }
+        }
+
+        // Controleer elke seconde of een website de boel probeert te veranderen
+        setInterval(lockTab, 1000);
+
+        // --- PROXY LOGIC ---
         function loadSite() {
             let input = document.getElementById('siteUrl').value.trim();
-            
-            // JOUW CORRECTE PROXY URL MET SLASH
             let proxyUrl = "https://webtopper-1.onrender.com/"; 
 
             if (input) {
                 let targetUrl = input;
-
-                // 1. Automatisch https:// toevoegen als het ontbreekt
                 if (!targetUrl.startsWith('http')) {
                     targetUrl = 'https://' + targetUrl;
                 }
                 
-                // 2. Combineer proxy + target
                 let finalUrl = proxyUrl + targetUrl;
-
-                console.log("Navigeren naar: " + finalUrl);
-
-                // 3. Open de geproxiede site in het huidige tabblad
                 window.location.href = finalUrl;
             } else {
                 alert("Typ eerst een URL in!");
             }
         }
 
-        // Enter-toets ondersteuning
         document.getElementById('siteUrl').addEventListener("keypress", function(e) {
             if (e.key === "Enter") loadSite();
         });
