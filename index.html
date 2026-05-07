@@ -44,7 +44,7 @@
         <div class="btn-group">
             <button class="go-btn" onclick="loadSite()">Open via Proxy</button>
         </div>
-        <div class="status-msg">Tip: Werkt het niet? Bezoek eerst <a href="https://webtopper-1.onrender.com/" target="_blank" style="color:#00d1ff;">deze link</a> om de server te wekken.</div>
+        <div class="status-msg">Tip: Werkt het niet? Bezoek eerst <a href="https://onrender.com" target="_blank" style="color:#00d1ff;">deze link</a> om de server te wekken.</div>
     </div>
 
     <script>
@@ -52,7 +52,7 @@
             let input = document.getElementById('siteUrl').value.trim();
             
             // JOUW CORRECTE PROXY URL MET SLASH
-            let proxyUrl = "https://webtopper-1.onrender.com/"; 
+            let proxyUrl = "https://onrender.com"; 
 
             if (input) {
                 let targetUrl = input;
@@ -67,7 +67,7 @@
 
                 console.log("Navigeren naar: " + finalUrl);
 
-                // 3. Open de geproxiede site in het huidige tabblad
+                // 3. Open de geproxiede site in het huidige tabblad (GEEN AB BLANK)
                 window.location.href = finalUrl;
             } else {
                 alert("Typ eerst een URL in!");
