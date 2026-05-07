@@ -35,30 +35,31 @@
     <script>
         function loadSite() {
             let input = document.getElementById('siteUrl').value.trim();
-            let proxyUrl = "https://onrender.com"; 
+            
+            // JOUW CORRECTE PROXY LINK:
+            let proxyUrl = "https://webtopper-1.onrender.com/"; 
 
             if (input) {
                 let targetUrl = input;
                 if (!targetUrl.startsWith('http')) targetUrl = 'https://' + targetUrl;
+                
+                // Plakt nu correct: https://webtopper-1.onrender.com/ + https://site.com
                 let finalUrl = proxyUrl + targetUrl;
 
-                // --- STAP 1: Open een echt leeg venster ---
                 let newWin = window.open('about:blank', '_blank');
 
-                if (!newWin || newWin.closed || typeof newWin.closed == 'undefined') { 
-                    alert("Pop-up geblokkeerd! Klik bovenaan in de balk op 'Toestaan' om BrederoUnblocked te gebruiken.");
+                if (!newWin) { 
+                    alert("Pop-up geblokkeerd! Klik rechtsboven in de balk op 'Toestaan'.");
                     return;
                 }
 
-                // --- STAP 2: Schrijf de iframe direct naar de nieuwe tab ---
-                // Dit zorgt ervoor dat de titel en favicon NOOIT veranderen
                 newWin.document.write(`
                     <html>
                     <head>
                         <title>BrederoUnblocked</title>
                         <link rel="icon" type="image/x-icon" href="https://google.com">
                         <style>
-                            body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+                            body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #000; }
                             iframe { width: 100%; height: 100%; border: none; }
                         </style>
                     </head>
