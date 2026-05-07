@@ -36,15 +36,15 @@
         function loadSite() {
             let input = document.getElementById('siteUrl').value.trim();
             
-            // JOUW CORRECTE PROXY LINK:
-            let proxyUrl = "https://webtopper-1.onrender.com/"; 
+            // We halen de / hier juist weg om hem later hard erin te zetten
+            let proxyBase = "https://onrender.com"; 
 
             if (input) {
                 let targetUrl = input;
                 if (!targetUrl.startsWith('http')) targetUrl = 'https://' + targetUrl;
                 
-                // Plakt nu correct: https://webtopper-1.onrender.com/ + https://site.com
-                let finalUrl = proxyUrl + targetUrl;
+                // We dwingen de slash hier tussen de twee variabelen
+                let finalUrl = proxyBase + "/" + targetUrl;
 
                 let newWin = window.open('about:blank', '_blank');
 
