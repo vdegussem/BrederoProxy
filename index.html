@@ -5,78 +5,68 @@
     <title>BrederoUnblocked</title>
     <link id="favicon" rel="icon" type="image/x-icon" href="https://google.com">
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: sans-serif; background: #1a1a1a; }
-        
-        /* De startpagina container */
-        #home {
+        body { 
+            margin: 0; padding: 0; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            height: 100vh; color: white; text-align: center;
+            height: 100vh; background: #1a1a1a; color: white; font-family: sans-serif; 
         }
-
-        .container { background: #333; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .container { text-align: center; background: #333; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         h1 { color: #00d1ff; margin-bottom: 10px; }
-        
         .url-input {
             width: 350px; padding: 15px; border-radius: 25px; border: 2px solid #444; 
             background: #222; color: white; font-size: 16px; outline: none;
         }
-
         .go-btn {
             margin-top: 25px; padding: 15px 40px; background: #00d1ff; color: black; 
             border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 16px;
-        }
-
-        /* De iframe die de site laadt */
-        #site-frame {
-            display: none; /* Staat uit tot je op Go klikt */
-            border: none; width: 100%; height: 100vh;
         }
     </style>
 </head>
 <body>
 
-    <!-- START SCHERM -->
-    <div id="home">
-        <div class="container">
-            <h1>BrederoUnblocked</h1>
-            <p>Voer een URL in:</p>
-            <input type="text" id="siteUrl" class="url-input" placeholder="bijv. wikipedia.org" autofocus>
-            <br>
-            <button class="go-btn" onclick="loadSite()">Open via Proxy</button>
-        </div>
+    <div class="container">
+        <h1>BrederoUnblocked</h1>
+        <p>Voer een URL in om deze onzichtbaar te openen:</p>
+        <input type="text" id="siteUrl" class="url-input" placeholder="bijv. youtube.com" autofocus>
+        <br>
+        <button class="go-btn" onclick="loadSite()">Launch Cloaked</button>
     </div>
-
-    <!-- HET VENSTER VOOR DE SITE -->
-    <iframe id="site-frame"></iframe>
 
     <script>
         function loadSite() {
             let input = document.getElementById('siteUrl').value.trim();
             let proxyUrl = "https://onrender.com"; 
-            let frame = document.getElementById('site-frame');
-            let home = document.getElementById('home');
 
             if (input) {
                 let targetUrl = input;
                 if (!targetUrl.startsWith('http')) targetUrl = 'https://' + targetUrl;
+                let finalUrl = proxyUrl + targetUrl;
+
+                // --- CLOAKING LOGIC ---
+                // Dit opent een nieuw venster zonder adres (about:blank)
+                var win = window.open();
+                win.document.title = "BrederoUnblocked";
                 
-                // Verberg het menu en toon de iframe
-                home.style.display = 'none';
-                frame.style.display = 'block';
-                
-                // Laad de proxy in de iframe
-                frame.src = proxyUrl + targetUrl;
+                // Zet de favicon vast in de nieuwe tab
+                var link = win.document.createElement('link');
+                link.rel = 'icon';
+                link.href = 'https://google.com';
+                win.document.head.appendChild(link);
+
+                // Maak een iframe die de hele nieuwe tab vult
+                var iframe = win.document.createElement('iframe');
+                iframe.style.width = "100%";
+                iframe.style.height = "100%";
+                iframe.style.margin = "0";
+                iframe.style.border = "none";
+                iframe.src = finalUrl;
+
+                win.document.body.style.margin = "0";
+                win.document.body.appendChild(iframe);
             }
         }
 
-        // TAB LOCKER: Dit blijft werken omdat de hoofdpagina nooit verandert!
-        const lockedTitle = "BrederoUnblocked";
-        setInterval(() => {
-            if (document.title !== lockedTitle) document.title = lockedTitle;
-        }, 100);
-
         document.getElementById('siteUrl').addEventListener("keypress", (e) => { if (e.key === "Enter") loadSite(); });
     </script>
-
 </body>
 </html>
