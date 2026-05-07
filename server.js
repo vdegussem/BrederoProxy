@@ -1,7 +1,7 @@
 const cors_proxy = require('cors-anywhere');
 
 const host = '0.0.0.0';
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 10000; 
 
 cors_proxy.createServer({
     originWhitelist: [], // Staat alles toe
