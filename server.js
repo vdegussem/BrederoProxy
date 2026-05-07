@@ -1,12 +1,11 @@
 const cors_proxy = require('cors-anywhere');
 
-// Render stelt de poort in via process.env.PORT
 const host = '0.0.0.0';
 const port = process.env.PORT || 8080;
 
 cors_proxy.createServer({
-    originWhitelist: [], // Staat alle domeinen toe
-    requireHeader: [],   // Geen speciale headers nodig om de proxy te gebruiken
+    originWhitelist: [], // Staat alles toe
+    requireHeader: [],   // VERWIJDERT de verplichting voor speciale headers
     removeHeaders: [
         'cookie',
         'cookie2',
