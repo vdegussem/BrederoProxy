@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="tab-title">BrederoUnblocked - Proxy Search</title>
-    <link id="tab-favicon" rel="icon" type="image/x-icon" href="https://google.com">
+    <title>BrederoUnblocked - Proxy Search</title>
     <style>
         body { 
             margin: 0; padding: 0; 
@@ -46,52 +45,40 @@
             box-shadow: 0 0 20px rgba(0, 209, 255, 0.25);
         }
 
-        .btn-group { margin-top: 30px; display: flex; gap: 10px; justify-content: center; }
+        .btn-group { 
+            margin-top: 30px; 
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
         
-        .go-btn, .cloak-btn {
-            padding: 14px 30px; 
+        .go-btn {
+            padding: 14px 35px; 
+            background: #00d1ff; 
+            color: black; 
             border: none; 
             border-radius: 50px; 
             cursor: pointer; 
             font-weight: bold; 
-            font-size: 14px;
+            font-size: 16px;
             transition: 0.2s;
-        }
-
-        .go-btn {
-            background: #00d1ff; 
-            color: black; 
             box-shadow: 0 4px 10px rgba(0, 209, 255, 0.2);
         }
 
-        .cloak-btn {
+        .go-btn.secondary {
             background: #333;
             color: #00d1ff;
             border: 1px solid #00d1ff;
         }
 
-        .go-btn:hover, .cloak-btn:hover { 
+        .go-btn:hover { 
+            background: #00b8e6; 
             transform: translateY(-2px);
-            opacity: 0.9;
+            box-shadow: 0 6px 15px rgba(0, 209, 255, 0.3);
         }
 
-        /* Cloaking Settings */
-        .cloak-settings {
-            margin-top: 20px;
-            display: none; /* Verborgen tot klik */
-            background: #222;
-            padding: 15px;
-            border-radius: 15px;
-            border: 1px solid #444;
-        }
-
-        .cloak-settings input {
-            padding: 8px;
-            margin: 5px;
-            border-radius: 5px;
-            border: 1px solid #444;
-            background: #111;
-            color: white;
+        .go-btn.secondary:hover {
+            background: #444;
         }
 
         .quick-links {
@@ -100,6 +87,15 @@
             justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
+        }
+
+        .quick-links a {
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+
+        .quick-links a:hover {
+            transform: scale(1.15);
         }
 
         .quick-links img {
@@ -117,6 +113,7 @@
         }
 
         a { color: #00d1ff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -127,96 +124,90 @@
         <input type="text" id="siteUrl" class="url-input" placeholder="Zoek of typ een URL..." autofocus>
         
         <div class="btn-group">
-            <button class="go-btn" onclick="loadSite()">Proxy Zoeken</button>
-            <button class="cloak-btn" onclick="toggleCloakMenu()">Tab Cloak</button>
-        </div>
-
-        <!-- Cloak Menu -->
-        <div id="cloakMenu" class="cloak-settings">
-            <input type="text" id="customTitle" placeholder="Nieuwe tab naam (bijv. Magister)">
-            <input type="text" id="customIcon" placeholder="Favicon URL">
-            <button class="go-btn" style="padding: 8px 15px;" onclick="applyCloak()">Opslaan</button>
-            <button class="go-btn" style="padding: 8px 15px; background: #ff4444;" onclick="resetCloak()">Reset</button>
+            <button class="go-btn" onclick="loadSite(false)">Proxy Zoeken</button>
+            <button class="go-btn secondary" onclick="loadSite(true)">Cloak Tab</button>
         </div>
 
         <div class="quick-links">
-            <a href="javascript:void(0)" onclick="quickLoad('https://youtube.com')"><img src="https://static.vecteezy.com/system/resources/thumbnails/042/127/234/small/white-square-bordered-youtube-logo-on-transparent-background-free-png.png"></a>
-            <a href="javascript:void(0)" onclick="quickLoad('https://wikipedia.org')"><img src="https://1000logos.net/wp-content/uploads/2021/11/Wikipedia-Logo-20031.png"></a>
-            <a href="javascript:void(0)" onclick="quickLoad('https://discord.com')"><img src="https://static.vecteezy.com/system/resources/previews/018/930/718/non_2x/discord-logo-discord-icon-transparent-free-png.png"></a>
-            <a href="javascript:void(0)" onclick="quickLoad('https://www.tiktok.com/')"><img src="https://www.freepnglogos.com/uploads/tik-tok-logo-png/tik-tok-how-use-tiktok-create-cool-videos-with-iphone-14.png"></a>
-            <a href="javascript:void(0)" onclick="quickLoad('https://instagram.com')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/1280px-Instagram_logo_2016.svg.png"></a>
+            <a href="javascript:void(0)" onclick="quickLoad('https://youtube.com')">
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/042/127/234/small/white-square-bordered-youtube-logo-on-transparent-background-free-png.png" alt="YouTube">
+            </a>
+            <a href="javascript:void(0)" onclick="quickLoad('https://wikipedia.org')">
+                <img src="https://1000logos.net/wp-content/uploads/2021/11/Wikipedia-Logo-20031.png" alt="Wikipedia">
+            </a>
+            <a href="javascript:void(0)" onclick="quickLoad('https://discord.com')">
+                <img src="https://static.vecteezy.com/system/resources/previews/018/930/718/non_2x/discord-logo-discord-icon-transparent-free-png.png" alt="Discord">
+            </a>
+            <a href="javascript:void(0)" onclick="quickLoad('https://www.tiktok.com/')">
+                <img src="https://www.freepnglogos.com/uploads/tik-tok-logo-png/tik-tok-how-use-tiktok-create-cool-videos-with-iphone-14.png" alt="TikTok">
+            </a>
+            <a href="javascript:void(0)" onclick="quickLoad('https://instagram.com')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/1280px-Instagram_logo_2016.svg.png" alt="Instagram">
+            </a>
         </div>
 
         <div class="status-msg">
             Tip: Werkt het niet? Bezoek eerst 
             <a href="https://webtopper-1.onrender.com/" target="_blank">deze link</a> 
+            om de server te wekken.
         </div>
     </div>
 
     <script>
-        function loadSite() {
+        const proxyBase = "https://webtopper-1.onrender.com/";
+
+        function cloak(url) {
+            const win = window.open();
+            if (!win || win.closed) {
+                alert("Pop-up geblokkeerd! Sta pop-ups toe voor cloaking.");
+                return;
+            }
+            win.document.body.style.margin = '0';
+            win.document.body.style.height = '100vh';
+            const iframe = win.document.createElement('iframe');
+            iframe.style.border = 'none';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.margin = '0';
+            iframe.src = url;
+            win.document.body.appendChild(iframe);
+        }
+
+        function loadSite(shouldCloak) {
             let input = document.getElementById('siteUrl').value.trim();
-            let proxyUrl = "https://onrender.com"; // Let op: pad kan verschillen per proxy setup
 
             if (input) {
                 let targetUrl = "";
                 const isUrl = input.includes('.') && !input.includes(' ');
+
                 if (isUrl) {
                     targetUrl = input.startsWith('http') ? input : 'https://' + input;
                 } else {
                     targetUrl = 'https://google.com' + encodeURIComponent(input);
                 }
-                window.location.href = proxyUrl + targetUrl;
+                
+                const finalUrl = proxyBase + targetUrl;
+
+                if (shouldCloak) {
+                    cloak(finalUrl);
+                } else {
+                    window.location.href = finalUrl;
+                }
+            } else {
+                alert("Typ eerst iets in!");
             }
         }
 
         function quickLoad(url) {
-            window.location.href = "https://onrender.com" + url;
+            window.location.href = proxyBase + url;
         }
 
-        // --- CLOAKING FUNCTIES ---
-        function toggleCloakMenu() {
-            let menu = document.getElementById('cloakMenu');
-            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function applyCloak() {
-            let title = document.getElementById('customTitle').value;
-            let icon = document.getElementById('customIcon').value;
-
-            if (title) {
-                document.title = title;
-                localStorage.setItem('cloakTitle', title);
+        document.getElementById('siteUrl').addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                loadSite(false);
             }
-            if (icon) {
-                let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-                link.type = 'image/x-icon';
-                link.rel = 'shortcut icon';
-                link.href = icon;
-                document.getElementsByTagName('head')[0].appendChild(link);
-                localStorage.setItem('cloakIcon', icon);
-            }
-            alert("Instellingen opgeslagen!");
-        }
-
-        function resetCloak() {
-            localStorage.clear();
-            location.reload();
-        }
-
-        // Laad instellingen bij opstarten
-        window.onload = function() {
-            if (localStorage.getItem('cloakTitle')) {
-                document.title = localStorage.getItem('cloakTitle');
-            }
-            if (localStorage.getItem('cloakIcon')) {
-                let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-                link.href = localStorage.getItem('cloakIcon');
-                document.getElementsByTagName('head')[0].appendChild(link);
-            }
-        };
-
-        document.getElementById('siteUrl').addEventListener("keypress", (e) => { if (e.key === "Enter") loadSite(); });
+        });
     </script>
+
 </body>
 </html>
