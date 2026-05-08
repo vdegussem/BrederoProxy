@@ -1,84 +1,222 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>WebTopper - No Frame</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="tab-title">BrederoUnblocked - Proxy Search</title>
+    <link id="tab-favicon" rel="icon" type="image/x-icon" href="https://google.com">
     <style>
         body { 
             margin: 0; padding: 0; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            height: 100vh; background: #1a1a1a; color: white; font-family: sans-serif; 
+            height: 100vh; background: #1a1a1a; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
         }
         
-        .container { text-align: center; background: #333; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h1 { color: #00d1ff; margin-bottom: 10px; }
-        p { color: #ccc; margin-bottom: 25px; }
-        
+        .container { 
+            text-align: center; 
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        h1 { 
+            color: #00d1ff; 
+            font-size: 48px;
+            margin-bottom: 20px; 
+            letter-spacing: -1px;
+        }
+
         .url-input {
-            width: 350px; padding: 15px; border-radius: 25px; border: 2px solid #444; 
-            background: #222; color: white; font-size: 16px; outline: none; transition: 0.3s;
+            width: 650px; 
+            max-width: 90%; 
+            padding: 18px 30px; 
+            border-radius: 50px; 
+            border: 1px solid #444; 
+            background: #222; 
+            color: white; 
+            font-size: 18px; 
+            outline: none; 
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        .url-input:focus { border-color: #00d1ff; background: #2a2a2a; }
+        .url-input:focus { 
+            border-color: #00d1ff; 
+            background: #2a2a2a; 
+            box-shadow: 0 0 20px rgba(0, 209, 255, 0.25);
+        }
 
-        .btn-group { margin-top: 25px; }
+        .btn-group { margin-top: 30px; display: flex; gap: 10px; justify-content: center; }
         
-        .go-btn {
-            padding: 15px 40px; background: #00d1ff; color: black; 
-            border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 16px;
+        .go-btn, .cloak-btn {
+            padding: 14px 30px; 
+            border: none; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 14px;
             transition: 0.2s;
         }
 
-        .go-btn:hover { background: #00b8e6; transform: scale(1.05); }
+        .go-btn {
+            background: #00d1ff; 
+            color: black; 
+            box-shadow: 0 4px 10px rgba(0, 209, 255, 0.2);
+        }
+
+        .cloak-btn {
+            background: #333;
+            color: #00d1ff;
+            border: 1px solid #00d1ff;
+        }
+
+        .go-btn:hover, .cloak-btn:hover { 
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        /* Cloaking Settings */
+        .cloak-settings {
+            margin-top: 20px;
+            display: none; /* Verborgen tot klik */
+            background: #222;
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid #444;
+        }
+
+        .cloak-settings input {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background: #111;
+            color: white;
+        }
+
+        .quick-links {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .quick-links img {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
         
-        .status-msg { font-size: 12px; color: #666; margin-top: 20px; }
+        .status-msg { 
+            font-size: 13px; 
+            color: #777; 
+            margin-top: 40px; 
+        }
+
+        a { color: #00d1ff; text-decoration: none; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>WebTopper</h1>
-        <p>Voer een URL in om deze via jouw proxy te openen</p>
-        <input type="text" id="siteUrl" class="url-input" placeholder="bijv. youtube.com" autofocus>
+        <h1>BrederoUnblocked</h1>
+        
+        <input type="text" id="siteUrl" class="url-input" placeholder="Zoek of typ een URL..." autofocus>
         
         <div class="btn-group">
-            <button class="go-btn" onclick="loadSite()">Open via Proxy</button>
+            <button class="go-btn" onclick="loadSite()">Proxy Zoeken</button>
+            <button class="cloak-btn" onclick="toggleCloakMenu()">Tab Cloak</button>
         </div>
-        <div class="status-msg">Tip: Werkt het niet? Bezoek eerst <a href="https://webtopper-1.onrender.com/" target="_blank" style="color:#00d1ff;">deze link</a> om de server te wekken.</div>
+
+        <!-- Cloak Menu -->
+        <div id="cloakMenu" class="cloak-settings">
+            <input type="text" id="customTitle" placeholder="Nieuwe tab naam (bijv. Magister)">
+            <input type="text" id="customIcon" placeholder="Favicon URL">
+            <button class="go-btn" style="padding: 8px 15px;" onclick="applyCloak()">Opslaan</button>
+            <button class="go-btn" style="padding: 8px 15px; background: #ff4444;" onclick="resetCloak()">Reset</button>
+        </div>
+
+        <div class="quick-links">
+            <a href="javascript:void(0)" onclick="quickLoad('https://youtube.com')"><img src="https://static.vecteezy.com/system/resources/thumbnails/042/127/234/small/white-square-bordered-youtube-logo-on-transparent-background-free-png.png"></a>
+            <a href="javascript:void(0)" onclick="quickLoad('https://wikipedia.org')"><img src="https://1000logos.net/wp-content/uploads/2021/11/Wikipedia-Logo-20031.png"></a>
+            <a href="javascript:void(0)" onclick="quickLoad('https://discord.com')"><img src="https://static.vecteezy.com/system/resources/previews/018/930/718/non_2x/discord-logo-discord-icon-transparent-free-png.png"></a>
+            <a href="javascript:void(0)" onclick="quickLoad('https://www.tiktok.com/')"><img src="https://www.freepnglogos.com/uploads/tik-tok-logo-png/tik-tok-how-use-tiktok-create-cool-videos-with-iphone-14.png"></a>
+            <a href="javascript:void(0)" onclick="quickLoad('https://instagram.com')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/1280px-Instagram_logo_2016.svg.png"></a>
+        </div>
+
+        <div class="status-msg">
+            Tip: Werkt het niet? Bezoek eerst 
+            <a href="https://webtopper-1.onrender.com/" target="_blank">deze link</a> 
+        </div>
     </div>
 
     <script>
         function loadSite() {
             let input = document.getElementById('siteUrl').value.trim();
-            
-            // JOUW CORRECTE PROXY URL MET SLASH
-            let proxyUrl = "https://webtopper-1.onrender.com/"; 
+            let proxyUrl = "https://onrender.com"; // Let op: pad kan verschillen per proxy setup
 
             if (input) {
-                let targetUrl = input;
-
-                // 1. Automatisch https:// toevoegen als het ontbreekt
-                if (!targetUrl.startsWith('http')) {
-                    targetUrl = 'https://' + targetUrl;
+                let targetUrl = "";
+                const isUrl = input.includes('.') && !input.includes(' ');
+                if (isUrl) {
+                    targetUrl = input.startsWith('http') ? input : 'https://' + input;
+                } else {
+                    targetUrl = 'https://google.com' + encodeURIComponent(input);
                 }
-                
-                // 2. Combineer proxy + target (nu mét de slash ertussen)
-                let finalUrl = proxyUrl + targetUrl;
-
-                console.log("Navigeren naar: " + finalUrl);
-
-                // 3. Open de geproxiede site in het huidige tabblad
-                window.location.href = finalUrl;
-            } else {
-                alert("Typ eerst een URL in!");
+                window.location.href = proxyUrl + targetUrl;
             }
         }
 
-        // Enter-toets ondersteuning
-        document.getElementById('siteUrl').addEventListener("keypress", function(e) {
-            if (e.key === "Enter") loadSite();
-        });
-    </script>
+        function quickLoad(url) {
+            window.location.href = "https://onrender.com" + url;
+        }
 
+        // --- CLOAKING FUNCTIES ---
+        function toggleCloakMenu() {
+            let menu = document.getElementById('cloakMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function applyCloak() {
+            let title = document.getElementById('customTitle').value;
+            let icon = document.getElementById('customIcon').value;
+
+            if (title) {
+                document.title = title;
+                localStorage.setItem('cloakTitle', title);
+            }
+            if (icon) {
+                let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+                link.type = 'image/x-icon';
+                link.rel = 'shortcut icon';
+                link.href = icon;
+                document.getElementsByTagName('head')[0].appendChild(link);
+                localStorage.setItem('cloakIcon', icon);
+            }
+            alert("Instellingen opgeslagen!");
+        }
+
+        function resetCloak() {
+            localStorage.clear();
+            location.reload();
+        }
+
+        // Laad instellingen bij opstarten
+        window.onload = function() {
+            if (localStorage.getItem('cloakTitle')) {
+                document.title = localStorage.getItem('cloakTitle');
+            }
+            if (localStorage.getItem('cloakIcon')) {
+                let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+                link.href = localStorage.getItem('cloakIcon');
+                document.getElementsByTagName('head')[0].appendChild(link);
+            }
+        };
+
+        document.getElementById('siteUrl').addEventListener("keypress", (e) => { if (e.key === "Enter") loadSite(); });
+    </script>
 </body>
 </html>
